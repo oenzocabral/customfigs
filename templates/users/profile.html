@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<h1>My Profile</h1>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Bio: {{ user.bio }}</p>
+{% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Profile picture" width="150">
+{% endif %}
+<p><a href="{% url 'edit_profile' %}">Edit Profile</a></p>
+<p><a href="{% url 'event_list' %}">View Events</a></p>
+<h2>My Albums</h2>
+<ul>
+    {% for album in user.albums.all %}
+        <li><a href="{% url 'album_detail' album.id %}">{{ album.event.name }}</a></li>
+    {% empty %}
+        <li>No albums yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
